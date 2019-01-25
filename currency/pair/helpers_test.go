@@ -120,56 +120,56 @@ func TestToLower(t *testing.T) {
 }
 
 func TestStdCoinSymbol(t *testing.T) {
-	var pair CurrencyItem
+	var item CurrencyItem
 
-	pair = CurrencyItem("BTC")
+	item = CurrencyItem("BTC")
 	expected := "BTC"
-	actual := pair.StdCoinSymbol()
+	actual := item.StdCoinSymbol()
 	if actual != expected {
 		t.Errorf("Test failed. TestStdBitcoinSymbol(): %v was not equal to expected value: %v",
 			actual, expected,
 		)
 	}
 
-	pair = CurrencyItem("btc")
+	item = CurrencyItem("btc")
 	expected = "BTC"
-	actual = pair.StdCoinSymbol()
+	actual = item.StdCoinSymbol()
 	if actual != expected {
 		t.Errorf("Test failed. TestStdBitcoinSymbol(): %v was not equal to expected value: %v",
 			actual, expected,
 		)
 	}
 
-	pair = CurrencyItem("XBT")
+	item = CurrencyItem("XBT")
 	expected = "BTC"
-	actual = pair.StdCoinSymbol()
+	actual = item.StdCoinSymbol()
 	if actual != expected {
 		t.Errorf("Test failed. TestStdBitcoinSymbol(): %v was not equal to expected value: %v",
 			actual, expected,
 		)
 	}
 
-	pair = CurrencyItem("xbt")
+	item = CurrencyItem("xbt")
 	expected = "BTC"
-	actual = pair.StdCoinSymbol()
+	actual = item.StdCoinSymbol()
 	if actual != expected {
 		t.Errorf("Test failed. TestStdBitcoinSymbol(): %v was not equal to expected value: %v",
 			actual, expected,
 		)
 	}
 
-	pair = CurrencyItem("ETH")
+	item = CurrencyItem("ETH")
 	expected = "ETH"
-	actual = pair.StdCoinSymbol()
+	actual = item.StdCoinSymbol()
 	if actual != expected {
 		t.Errorf("Test failed. TestStdBitcoinSymbol(): %v was not equal to expected value: %v",
 			actual, expected,
 		)
 	}
 
-	pair = CurrencyItem("eth")
+	item = CurrencyItem("eth")
 	expected = "ETH"
-	actual = pair.StdCoinSymbol()
+	actual = item.StdCoinSymbol()
 	if actual != expected {
 		t.Errorf("Test failed. TestStdBitcoinSymbol(): %v was not equal to expected value: %v",
 			actual, expected,
@@ -177,66 +177,334 @@ func TestStdCoinSymbol(t *testing.T) {
 	}
 }
 
-/*
-// StdCoinSymbol returns the "standard Coin symbol, e.g. BTC for Bitcoin, all returned symbols are upper
-func (c CurrencyItem) StdCoinSymbol() string {
-	switch c.ToUpper() {
-	case AltBitcoinSymbol:
-		return BitcoinSymbol
-	default:
-		return c.ToUpper()
+func TestStdBitcoin(t *testing.T) {
+	var item CurrencyItem
+
+	item = CurrencyItem("BTC")
+	expected := CurrencyItem("BTC")
+	actual := item.StdBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestStdBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("btc")
+	expected = CurrencyItem("BTC")
+	actual = item.StdBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestStdBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("XBT")
+	expected = CurrencyItem("BTC")
+	actual = item.StdBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestStdBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("xbt")
+	expected = CurrencyItem("BTC")
+	actual = item.StdBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestStdBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("ETH")
+	expected = CurrencyItem("ETH")
+	actual = item.StdBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestStdBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
 	}
 }
 
-// StdBitcoin return a standard bitcoin currency item for the provided currency item
-func (c CurrencyItem) StdBitcoin() CurrencyItem {
-	return CurrencyItem(c.StdCoinSymbol())
-}
+func TestStdCoinPair(t *testing.T) {
 
-// StdBitcoinPair return a standard bitcoin currency pair for the provided currency pair
-func (p CurrencyPair) StdBitcoinPair() CurrencyPair {
-	return CurrencyPair{
-		FirstCurrency:  CurrencyItem(p.FirstCurrency.StdCoinSymbol()),
-		SecondCurrency: CurrencyItem(p.SecondCurrency.StdCoinSymbol()),
-		Delimiter:      p.Delimiter,
+	pair := NewCurrencyPair("BTC", "EUR")
+	expected := NewCurrencyPair("BTC", "EUR")
+	actual := pair.StdBitcoinPair()
+	if actual != expected {
+		t.Errorf("Test failed. TestStdBitcoinPair(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	pair = NewCurrencyPair("XBT", "EUR")
+	expected = NewCurrencyPair("BTC", "EUR")
+	actual = pair.StdBitcoinPair()
+	if actual != expected {
+		t.Errorf("Test failed. TestStdBitcoinPair(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	pair = NewCurrencyPair("EUR", "BTC")
+	expected = NewCurrencyPair("EUR", "BTC")
+	actual = pair.StdBitcoinPair()
+	if actual != expected {
+		t.Errorf("Test failed. TestStdBitcoinPair(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	pair = NewCurrencyPair("EUR", "XBT")
+	expected = NewCurrencyPair("EUR", "BTC")
+	actual = pair.StdBitcoinPair()
+	if actual != expected {
+		t.Errorf("Test failed. TestStdBitcoinPair(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	pair = NewCurrencyPair("XBT", "XBT")
+	expected = NewCurrencyPair("BTC", "BTC")
+	actual = pair.StdBitcoinPair()
+	if actual != expected {
+		t.Errorf("Test failed. TestStdBitcoinPair(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
 	}
 }
 
-// ChangeBitcoin swaps between the std and alt BitcoinSymbol
-func (c CurrencyItem) ChangeBitcoin(std bool) CurrencyItem {
-	if std {
-		if c.ToUpper() == AltBitcoinSymbol {
-			return CurrencyItem(BitcoinSymbol)
-		}
-		return c
+func TestChangeBitcoin(t *testing.T) {
+
+	item := CurrencyItem("BTC")
+	expected := CurrencyItem("BTC")
+	actual := item.ChangeBitcoin(true)
+	if actual != expected {
+		t.Errorf("Test failed. TestChangeBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
 	}
-	if c.ToUpper() == BitcoinSymbol {
-		return CurrencyItem(AltBitcoinSymbol)
+
+	item = CurrencyItem("btc")
+	expected = CurrencyItem("btc")
+	actual = item.ChangeBitcoin(true)
+	if actual != expected {
+		t.Errorf("Test failed. TestChangeBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
 	}
-	return c
+
+	item = CurrencyItem("XBT")
+	expected = CurrencyItem("BTC")
+	actual = item.ChangeBitcoin(true)
+	if actual != expected {
+		t.Errorf("Test failed. TestChangeBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("xbt")
+	expected = CurrencyItem("BTC")
+	actual = item.ChangeBitcoin(true)
+	if actual != expected {
+		t.Errorf("Test failed. TestChangeBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("ETH")
+	expected = CurrencyItem("ETH")
+	actual = item.ChangeBitcoin(true)
+	if actual != expected {
+		t.Errorf("Test failed. TestChangeBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("BTC")
+	expected = CurrencyItem("XBT")
+	actual = item.ChangeBitcoin(false)
+	if actual != expected {
+		t.Errorf("Test failed. TestChangeBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("btc")
+	expected = CurrencyItem("XBT")
+	actual = item.ChangeBitcoin(false)
+	if actual != expected {
+		t.Errorf("Test failed. TestChangeBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("XBT")
+	expected = CurrencyItem("XBT")
+	actual = item.ChangeBitcoin(false)
+	if actual != expected {
+		t.Errorf("Test failed. TestChangeBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("xbt")
+	expected = CurrencyItem("xbt")
+	actual = item.ChangeBitcoin(false)
+	if actual != expected {
+		t.Errorf("Test failed. TestChangeBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("ETH")
+	expected = CurrencyItem("ETH")
+	actual = item.ChangeBitcoin(false)
+	if actual != expected {
+		t.Errorf("Test failed. TestChangeBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
 }
 
-// IsCrypto checks whether provided currency is a Crypto currency
-func (c CurrencyItem) IsCrypto() bool {
-	return !c.IsFiat()
-}
+func TestIsCrypto(t *testing.T) {
 
-// IsBitcoin tests whether provided currency item is a bitcoin or not
-func (c CurrencyItem) IsBitcoin() bool {
-	if c.IsStdBitcoin() || c.IsAltBitcoin() {
-		return true
+	item := CurrencyItem("BTC")
+	expected := true
+	actual := item.IsCrypto()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsCrypto(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
 	}
-	return false
-}
 
-// IsAltBitcoin tests whether currency item is a alt bitcoin symbol
-func (c CurrencyItem) IsAltBitcoin() bool {
-	if c.ToUpper() == AltBitcoinSymbol {
-		return true
+	item = CurrencyItem("ETH")
+	expected = true
+	actual = item.IsCrypto()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsCrypto(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
 	}
-	return false
+
+	item = CurrencyItem("btc")
+	expected = true
+	actual = item.IsCrypto()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsCrypto(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("USD")
+	expected = false
+	actual = item.IsCrypto()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsCrypto(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("eur")
+	expected = false
+	actual = item.IsCrypto()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsCrypto(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
 }
 
+func TestIsBitcoin(t *testing.T) {
+
+	item := CurrencyItem("BTC")
+	expected := true
+	actual := item.IsBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("XBT")
+	expected = true
+	actual = item.IsBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsBitcoin()(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("btc")
+	expected = true
+	actual = item.IsBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("USD")
+	expected = false
+	actual = item.IsBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("eur")
+	expected = false
+	actual = item.IsBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+}
+
+func TestIsAltBitcoin(t *testing.T) {
+
+	item := CurrencyItem("BTC")
+	expected := false
+	actual := item.IsAltBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsAltBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("XBT")
+	expected = true
+	actual = item.IsAltBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsAltBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("xbt")
+	expected = true
+	actual = item.IsAltBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsAltBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+
+	item = CurrencyItem("USD")
+	expected = false
+	actual = item.IsAltBitcoin()
+	if actual != expected {
+		t.Errorf("Test failed. TestIsAltBitcoin(): %v was not equal to expected value: %v",
+			actual, expected,
+		)
+	}
+}
+
+
+/* TODO
 // IsStdBitcoin tests whether currency item is BTC
 func (c CurrencyItem) IsStdBitcoin() bool {
 	if c.ToUpper() == BitcoinSymbol {
@@ -282,3 +550,4 @@ func (p CurrencyPair) EqualStdBitcoin(b CurrencyPair, stdBTC bool) bool {
 	return p.ToUpper() == b.ToUpper()
 }
 */
+
